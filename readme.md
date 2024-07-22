@@ -13,6 +13,4 @@ sudo apt update -y
   530  cd /home/manh264/Desktop/kali_api
   536  python3 -m venv kali_server
   537  source kali_server/bin/activate 
-  549  pip install unidecode
-  550  pip install parser
-  553  pip install python-dateutil
+pip install fastapi uvicorn pydantic 

@@ -5,11 +5,7 @@ import logging
 from pydantic import BaseModel
 import configparser
 import subprocess
-from dateutil import parser
-import os 
 from pydantic import BaseModel, validator, ValidationError
-import re
-import unidecode
 from utils.server_utils import *
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', filename='fastapi.log', filemode='w')
