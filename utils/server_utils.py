@@ -1,3 +1,7 @@
+import uuid
+import os
+
+
 def gen_extract_command(hash_type, file_path):
     match hash_type:
         case 22100:
@@ -49,3 +53,16 @@ def refine_hash (hash_type, hash):
                 
             ]
             return "Handled case one"
+        
+
+def generate_unique_filename(UPLOAD_FOLDER, extension="txt"):
+    if extension != None:
+        filename = f"{uuid.uuid4()}.{extension}"
+        file_path = os.path.join(UPLOAD_FOLDER, filename)
+        if not os.path.exists(file_path):
+            return filename
+    else:
+        filename = f"{uuid.uuid4()}"
+        file_path = os.path.join(UPLOAD_FOLDER, filename)
+        if not os.path.exists(file_path):
+            return filename 
