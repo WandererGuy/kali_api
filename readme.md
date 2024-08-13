@@ -9,8 +9,8 @@ https://gist.github.com/Geoyi/d9fab4f609e9f75941946be45000632b
 
 
 sudo apt update -y
-  525  sudo apt install python3 -y 
-  530  cd /home/manh264/Desktop/kali_api
-  536  python3 -m venv kali_server
-  537  source kali_server/bin/activate 
+sudo apt install python3 -y 
+cd /home/manh264/Desktop/kali_api
+python3 -m venv kali_server
+source kali_server_env/bin/activate 
 pip install fastapi uvicorn pydantic 

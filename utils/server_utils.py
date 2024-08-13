@@ -1,6 +1,30 @@
 import uuid
 import os
 
+hash_type_dict = {
+    'MD5': 0,
+    'BitLocker': 22100,
+    '7-Zip': 11600,
+    'WinZip': 13600,
+    'RAR5': 13000
+}    
+
+attack_mode_dict = {
+    "Straight": 0,
+    "Combination": 1,
+    "Brute-force": 3,
+    "Hybrid Wordlist + Mask": 6,
+    "Hybrid Mask + Wordlist": 7,
+    "Association": 9
+}
+
+def check_value_in_dict(value_to_check, dict):
+    if value_to_check in dict.keys():
+        return True
+    else:
+        available_keys = ', '.join(map(str, dict.keys()))
+        raise KeyError(f"'{value_to_check}' does not exist in the dictionary keys. Available keys: {available_keys}")
+
 
 def gen_extract_command(hash_type, file_path):
     match hash_type:
@@ -31,28 +55,24 @@ def gen_extract_command(hash_type, file_path):
 
 
 def data_type_translate(data_name):
-    hash_dict = {
-        'MD5': 0,
-        'BitLocker': 22100,
-        '7-Zip': 11600,
-        'WinZip': 13600,
-        'RAR5': 13000
-    }    
-    return hash_dict[data_name]
-    
+    return hash_type_dict[data_name]
+
+def attack_mode_translate(attack_mode):
+    return attack_mode_dict[attack_mode]   
+ 
 def clean_path (path):
     path = '/mnt/'+ path
-    path = path.replace('D:', 'd').replace('C:','c').replace('E:','e').replace('F:','f')
+    path = path.replace('D:', 'd').replace('C:','c').replace('E:','e').replace('F:','f').replace('\\', '/')
     return path
 
-def refine_hash (hash_type, hash):
-    match hash_type:
-        case 22100:
-            command = [
-                'bitlocker2john',
+# def refine_hash (hash_type, hash):
+    # match hash_type:
+    #     case 22100:
+    #         command = [
+    #             'bitlocker2john',
                 
-            ]
-            return "Handled case one"
+    #         ]
+    #         return "Handled case one"
         
 
 def generate_unique_filename(UPLOAD_FOLDER, extension="txt"):
@@ -66,3 +86,11 @@ def generate_unique_filename(UPLOAD_FOLDER, extension="txt"):
         file_path = os.path.join(UPLOAD_FOLDER, filename)
         if not os.path.exists(file_path):
             return filename 
+        
+def check_result_available(file):
+    with open (file, 'r') as f_:
+        f = f_.read()
+        if 'Status...........: Exhausted' in f:
+            return False
+        else:
+            return True
